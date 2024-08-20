@@ -33,9 +33,17 @@ For the pocket IDP you need to prepare a few more things on top of the 5min-IDP 
 2. Run the PocketIDP
 
     ```shell
+    #For the prebuilt container
+    docker run --rm -it -h pocketidp --name 5min-idp --pull always \
+        -e HUMANITEC_ORG \
+        -v hum-5min-idp:/state \
+        -v $HOME/.humctl:/root/.humctl \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        --network bridge \
+        ghcr.io/internaldeveloperplatform/pocketidp
+    
     #For the non-prebuilt container
-    gh clone jayonthenet/5min-idp
-    git checkout pocketidp
+    gh repo clone InternalDeveloperPlatform/PocketIDP
+    cd PocketIDP
     make run-local
     ```
-
