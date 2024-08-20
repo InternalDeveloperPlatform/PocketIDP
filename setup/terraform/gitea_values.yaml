@@ -1,0 +1,51 @@
+redis-cluster:
+  enabled: false
+redis:
+  enabled: true
+postgresql:
+  enabled: true
+postgresql-ha:
+  enabled: false
+
+persistence:
+  enabled: true
+
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: "git.localhost"
+      paths: 
+        - path: "/"
+          pathType: "Prefix"
+    - host: "5min-idp-control-plane"
+      paths:
+        - path: "/"
+          pathType: "Prefix"
+    - host: "pidp-127-0-0-1.nip.io"
+      paths:
+        - path: "/"
+          pathType: "Prefix"
+  tls:
+    - secretName: "gitea-tls"
+      hosts:
+        - "git.localhost"
+        - "5min-idp-control-plane"
+        - "pidp-127-0-0-1.nip.io"
+
+gitea:
+  config:
+    database:
+      DB_TYPE: postgres
+    indexer:
+      ISSUE_INDEXER_TYPE: bleve
+      REPO_INDEXER_ENABLED: true
+    APP_NAME: "Pocket IDP - Git Service"
+    repository:
+      ROOT: "~/gitea-repositories"
+    repository.pull-request:
+      WORK_IN_PROGRESS_PREFIXES: "WIP:,[WIP]:"
+  admin:
+    username: "5minadmin"
+    password: "5minadmin"
+    email: "jay@humanitec.com"

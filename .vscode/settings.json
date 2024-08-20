@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/score-spec/schema/main/score-v1b1.json": "score.yaml",
+        "https://json.schemastore.org/yamllint.json": "setup/kind/cluster.yaml"
+    }
+}

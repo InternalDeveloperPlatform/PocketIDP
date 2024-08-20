@@ -1,0 +1,53 @@
+name: ci
+on:
+  push:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Prepare
+
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Humanitec CLI
+        uses: humanitec/setup-cli-action@v1
+        with:
+          version: "0.21.1"
+      - name: Setup tflit
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: v0.49.0
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Validate
+
+      - name: Lint
+        run: make lint
+      - name: Simulate a humctl login
+        run: |
+          yq e -n '.token = "'"${HUMANITEC_TOKEN}"'"' > ~/.humctl
+        env:
+          HUMANITEC_TOKEN: ${{ secrets.HUMANITEC_TOKEN }}
+      - name: Test
+        run: make test
+        env:
+          HUMANITEC_ORG: ${{ secrets.HUMANITEC_ORG }}
+
+      # Push
+
+      - if: github.ref == 'refs/heads/main'
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: github.ref == 'refs/heads/main'
+        name: Push image
+        run: make push

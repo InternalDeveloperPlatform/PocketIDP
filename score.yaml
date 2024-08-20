@@ -1,0 +1,32 @@
+# Based on https://github.com/score-spec/sample-score-app
+
+apiVersion: score.dev/v1b1
+metadata:
+  name: hello-world
+service:
+  ports:
+    www:
+      port: 8080
+      targetPort: 3000
+containers:
+  hello-world:
+    image: ghcr.io/score-spec/sample-score-app
+    variables:
+      PORT: "3000"
+      MESSAGE: "Hello, World!"
+      DB_DATABASE: ${resources.db.name}
+      DB_USER: ${resources.db.username}
+      DB_PASSWORD: ${resources.db.password}
+      DB_HOST: ${resources.db.host}
+      DB_PORT: ${resources.db.port}
+resources:
+  dns:
+    type: dns
+  route:
+    type: route
+    params:
+      host: ${resources.dns.host}
+      path: /
+      port: 8080
+  db:
+    type: postgres
