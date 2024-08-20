@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-LABEL org.opencontainers.image.source https://github.com/humanitec-tutorials/5min-idp
+LABEL org.opencontainers.image.source=https://github.com/InternalDeveloperPlatform/PocketIDP
 
 RUN apk add --no-cache \
   bash curl git jq bash-completion docker-cli && \

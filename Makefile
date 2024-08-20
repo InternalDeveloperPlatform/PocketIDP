@@ -1,5 +1,5 @@
 IMG_TAG ?= latest
-IMG ?= ghcr.io/humanitec-tutorials/5min-idp:$(IMG_TAG)
+IMG ?= ghcr.io/internaldeveloperplatform/pocketidp:$(IMG_TAG)
 PLATFORM ?= linux/amd64,linux/arm64
 
 # Build the 5min-idp image
@@ -27,7 +27,7 @@ lint: lint-init
 
 # Test the 5min-idp
 test: build check-image
-	docker run --rm -i -h 5min-idp --name 5min-idp \
+	docker run --rm -i -h pocketidp --name 5min-idp \
 	-e HUMANITEC_ORG \
 	-v hum-5min-idp:/state \
 	-v $(HOME)/.humctl:/root/.humctl \
@@ -37,7 +37,7 @@ test: build check-image
 
 # Run the locally built image
 run-local: build
-	docker run --rm -it -h 5min-idp --name 5min-idp \
+	docker run --rm -it -h pocketidp --name 5min-idp \
 	-e HUMANITEC_ORG \
 	-e HUMANITEC_SERVICE_USER \
 	-e TLS_CA_CERT \
@@ -50,7 +50,7 @@ run-local: build
 	$(IMG)
 # Run the locally built image and don't delete the state
 run-local-persistent: build
-	docker run -it -h 5min-idp --name 5min-idp \
+	docker run -it -h pocketidp --name 5min-idp \
 	-e HUMANITEC_ORG \
 	-e HUMANITEC_SERVICE_USER \
 	-e TLS_CA_CERT \
