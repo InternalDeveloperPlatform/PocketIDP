@@ -8,7 +8,7 @@ For the pocket IDP you need to prepare a few more things on top of the 5min-IDP 
 
 1. Create a local CA and sign a certificate that you can provide
 
-    See [mkcert installation]([Install](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#installation))
+    See [mkcert installation](https://github.com/FiloSottile/mkcert?tab=readme-ov-file#installation)
     ```shell
     brew install mkcert 
     mkcert -install
