@@ -29,7 +29,7 @@ resource "humanitec_environment" "demo" {
   name   = "5min IDP local environment"
   type   = local.env_type
 
-  depends_on = [ humanitec_environment_type.local ]
+  depends_on = [ humanitec_environment_type.local, humanitec_application.demo ]
 }
 
 # Backstage application & config
@@ -43,7 +43,7 @@ resource "humanitec_environment" "backstage" {
   name   = "5min IDP local environment"
   type   = local.env_type
 
-  depends_on = [ humanitec_environment_type.local ]
+  depends_on = [ humanitec_environment_type.local, humanitec_application.backstage ]
 }
 
 # Configure k8s namespace naming

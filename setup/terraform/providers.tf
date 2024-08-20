@@ -14,7 +14,7 @@ terraform {
     }
     humanitec = {
       source  = "humanitec/humanitec"
-      version = "~> 1.6"
+      version = "~> 1.6.5"
     }
     random = {
       source  = "hashicorp/random"
