@@ -30,7 +30,7 @@ kind export kubeconfig --internal  -n 5min-idp --kubeconfig "$kubeconfig_docker"
 ### Export needed env-vars for terraform
 export TF_VAR_humanitec_org=$HUMANITEC_ORG
 # Aim for service user if present, otherwise use current user token (max 24h validity)
-if [ -z "$HUMANITEC_SERVICE_USER" ]; then
+if [ -n "$HUMANITEC_SERVICE_USER" ]; then
   export TF_VAR_humanitec_token=$HUMANITEC_SERVICE_USER
 else
   export TF_VAR_humanitec_token=$(yq -r '.token' ~/.humctl)
