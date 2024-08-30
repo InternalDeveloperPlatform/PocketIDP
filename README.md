@@ -18,17 +18,20 @@ If you choose to extend your experience beyond the capabilities of a local-machi
 
 ## Installation
 
+> [!IMPORTANT]
+> The following instructions are meant to be executed on MacOS or Linux. If you use a different shell or > OS, please adopt paths and commands as needed.
+
 1. Create a local CA and sign a certificate that you can provide to the PocketIDP
-   
+
    ```shell
    mkcert -install
    mkcert 5min-idp 5min-idp-control-plane kubernetes.docker.internal localhost 127.0.0.1 ::1
    ```
-   
+
    Be sure to note the path and filenames of the generated certificates as you need them for step 3!
 
 2. Login with humctl to create the token that will be picked up by direnv in the next step
-   
+
    ```shell
    humctl login
    ```
@@ -36,21 +39,23 @@ If you choose to extend your experience beyond the capabilities of a local-machi
    Now follow [this guide](https://developer.humanitec.com/platform-orchestrator/security/service-users/) to create a more permanent service user token that will allow usage of your PocketIDP beyond 24h. You will need it as well in the next step.
 
 3. Populate environment variables
-   
+
    First, you want to create a `.envrc` file with the following contents - it will be run by direnv every time you change into this directory, so it might be a good idea to have your own directory for the PocketIDP.
-   
+
    ```shell
    token=$(yq -r '.token' ~/.humctl)
    export HUMANITEC_TOKEN=$token
    export HUMANITEC_ORG="" #set me to your Humanitec org
    export HUMANITEC_SERVICE_USER="" #set permanent token from step 2
-   export TLS_CA_CERT="" #Export CA in PEM format and set here
-   export TLS_CERT_STRING="" #Your cert in base64 encoded format
-   export TLS_KEY_STRING="" #Your key in base64 encoded format
+   # CA in PEM format and set here
+   export TLS_CA_CERT="$(mkcert -CAROOT)/rootCA.pem"
+   # Please check on the paths to your files from step 1
+   export TLS_CERT_STRING="$(cat /%%%YOUR PATH HERE%%%/%%%YOUR FILE NAME HERE%%%.pem | base64)" #Your cert in base64 encoded format
+   export TLS_KEY_STRING="$(cat /%%%YOUR PATH HERE%%%/%%%YOUR FILE NAME HERE%%%-key.pem | base64)" #Your key in base64 encoded format
    ```
-   
+
    and allow direnv to work with this file by executing
-   
+
    ```shell
    direnv allow
    ```
