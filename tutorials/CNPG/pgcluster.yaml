@@ -1,0 +1,15 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: my-cluster
+spec:
+  instances: 1
+
+  storage:
+    size: 100M
+  bootstrap:
+    initdb:
+      database: my-cluster
+      owner: scott
+      secret:
+        name: my-cluster-secret
