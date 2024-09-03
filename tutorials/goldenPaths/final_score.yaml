@@ -1,0 +1,29 @@
+apiVersion: score.dev/v1b1
+
+metadata:
+  name: podinfo-workload
+
+service:
+  ports:
+    www:
+      port: 80 # The port that the service will be exposed on
+      targetPort: 9898 # The port that the container will be listening on
+
+containers:
+  podinfo:
+    image: . # Set by pipeline
+    variables:
+      Hello: World
+      connection_string: ${resources.posty.username}:${resources.posty.password}@${resources.posty.host}:${resources.posty.port}/${resources.posty.name}
+
+resources:
+  dns: # We need a DNS record to point to the service 
+    type: dns
+  posty:
+    type: postgres
+  route:
+    type: route
+    params:
+      host: ${resources.dns.host}
+      path: /
+      port: 80
