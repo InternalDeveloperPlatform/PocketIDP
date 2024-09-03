@@ -138,3 +138,9 @@ humctl apply -f %%%yourFileNameHere%%%
 ## Use in deployment
 
 Simply re-deploying your test application using the `1_demo.sh` script should change the Postgres from an in-cluster Postgres container to a CNPG-based Postgres cluster.
+
+To check you can use this command - the output should read `my-cluster-rw`
+
+```shell
+humctl get active-resource --app 5min-idp-uzzq --env 5min-local -o yaml | yq '.[] | select (.metadata.type == "postgres") | .status.resource.host'
+```
