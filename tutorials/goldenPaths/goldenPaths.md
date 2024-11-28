@@ -42,7 +42,7 @@ Follow the link to the `repository`.
 > [!IMPORTANT]
 > It might be that your local DNS configuration is not picking up the domain under which
 > some links are generated inside the PocketIDP. If that is the case, please edit your
-> `/etc/>hosts` file (or Windows equivalent) and map `5min-idp-control-plane` to `127.0.0.1`.
+> `/etc/hosts` file (or Windows equivalent) and map `5min-idp-control-plane` to `127.0.0.1`.
 
 ### 2. Adding resources
 
@@ -154,9 +154,9 @@ resources:
       port: 80
 ```
 
-> ![WARNING]
-> This path ends **<u>exactly</u>** here, to trigger the next one. Golden paths can 
-> sometimes be combined/composed elegantly to achieve different outcomes, which is 
+> [!WARNING]
+> This path ends **exactly** here, to trigger the next one. Golden paths can
+> sometimes be combined/composed elegantly to achieve different outcomes, which is
 > what we do in this case.
 
 ### 4. Spinning up ephemeral environments
